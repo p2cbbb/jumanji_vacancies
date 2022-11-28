@@ -1,7 +1,7 @@
 ### Каталог c вакансиями для Junior-разработчиков
 ##### Стек: Python, Django, Bootstrap, Postgresql
 
-Ccылка на сайт: https://dnjumanji.herokuapp.com/
+>Ccылка на сайт для тестирования: https://dnjumanji.herokuapp.com/
 
 ##### Функционал сайта: 
 - размещение вакансий от лица компании 

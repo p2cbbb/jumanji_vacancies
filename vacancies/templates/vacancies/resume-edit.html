@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block title %}Создать резюме | Джуманджи{% endblock %}
+
+{% block content %}
+<style>
+  body {background-color: #F6F2E6;}
+</style>
+
+<main class="container mt-3 pb-5">
+  <section class="col-12 col-lg-6 offset-lg-3 mt-5 card">
+    <div class="card-body px-3 pb-4">
+      <h1 class="h4 pt-2 pb-3">Мое резюме</h1>
+      {% if messages %}
+        {% for message in messages %}
+        <p class="alert alert-info" role="alert">
+          {{ message }}
+        </p>
+        {% endfor %}
+      {% endif %}
+
+      <form action="" method="post" class="" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group pb-2">
+
+              <label class="mb-2 text-dark" for="id_name">Имя</label>
+              <input class="form-control" type="text" name="name" maxlength="200" required id="id_name" value="{{ resume.name }}">
+            
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group pb-2">
+
+              <label class="mb-2 text-dark" for="id_surname">Фамилия</label>
+              <input class="form-control" type="text" name="surname" maxlength="200" required id="id_surname" value="{{ resume.surname }}">
+            
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group pb-2">
+              
+              <label class="mb-2 text-dark" for="id_status">Готовность к работе</label>
+              
+              <select class="custom-select mr-sm-2" name="status" required id="id_status">
+                <option value="">---------</option>
+                <option value="Не ищу работу" {% if resume.status == 'Не ищу работу' %}selected{% endif %}>Не ищу работу</option>
+                <option value="Рассматриваю предложения" {% if resume.status == 'Рассматриваю предложения' %}selected{% endif %}>Рассматриваю предложения</option>
+                <option value="Ищу работу" {% if resume.status == 'Ищу работу' %}selected{% endif %}>Ищу работу</option>
+              </select>
+            
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group pb-2">
+              
+              <label class="mb-2 text-dark" for="id_salary"">Ожидаемое вознаграждение</label>
+              <input class="form-control" type="number" name="salary" id="id_salary" value="{% if resume.salary %}{{ resume.salary }}{% else %}0{% endif %}">
+            
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 col-md-6">
+            <div class="form-group pb-2">
+              
+              <label class="mb-2 text-dark" for="id_specialty">Специализация</label>
+              <select class="custom-select mr-sm-2" name="specialty" id="id_specialty">
+                {% for specialty in specialties %}
+                  <option value="{{ specialty.code }}" {% if resume.specialty.code == specialty.code %}selected{% endif %}>{{ specialty.name }}</option>
+                {% endfor %}
+              </select>
+            
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <div class="form-group pb-2">
+              <label class="mb-2 text-dark" for="id_grade">Квалификация</label>
+              <select class="custom-select mr-sm-2" name="grade" required id="id_grade">
+                <option value="">---------</option>
+                <option value="Стажер" {% if resume.grade == 'Стажер' %}selected{% endif %}>Стажер</option>
+                <option value="Джуниор" {% if resume.grade == 'Джуниор' %}selected{% endif %}>Джуниор</option>
+                <option value="Мидл" {% if resume.grade == 'Мидл' %}selected{% endif %}>Мидл</option>
+                <option value="Синьор" {% if resume.grade == 'Синьор' %}selected{% endif %}>Синьор</option>
+                <option value="Лид" {% if resume.grade == 'Лид' %}selected{% endif %}>Лид</option>
+              </select>
+            
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group pb-2">
+          
+          <label class="mb-2 text-dark" for="id_education">Образование</label>
+          <textarea class="form-control text-uppercase" name="education" id="id_education" rows="4" style="color:#000;">{{ resume.education }}</textarea>
+        
+        </div>
+        
+        <div class="form-group pb-2">
+          
+          <label class="mb-2 text-dark" for="id_experience"">Опыт работы</label>
+          <textarea class="form-control" rows="4" name="experience" id="id_experience" style="color:#000;">{{ resume.experience }}</textarea>
+        
+        </div>
+
+        <div class="form-group pb-3">
+          
+          <label class="mb-2 text-dark" for="id_portfolio">Ссылка на портфолио</label>
+          <input class="form-control" type="url" name="portfolio" maxlength="200" id="id_portfolio" placeholder="http://anylink.github.io" >
+        
+        </div>
+        {{ form.errors }}
+        
+        <div class="form-group">
+          <input type="submit" class="btn btn-info" value="Сохранить">
+        </div>
+
+      </form>
+    </div>
+  </section>
+</main>
+{% endblock %}

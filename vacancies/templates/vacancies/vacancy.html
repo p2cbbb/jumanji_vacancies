@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}{{ vacancy.title }} | Джуманджи{% endblock %}
+
+{% block content %}
+
+<main class="container mt-3 pb-5">
+  <div class="row mt-5">
+    <div class="col-12 col-lg-2">
+      <div class="pl-3 mb-5">
+        <p><input type=button value="Назад" onClick="javascript:history.go(-1);"></p>
+      </div>
+    </div>
+    <div class="col-12 col-lg-8">
+      <section class="pl-3">
+        <a href="{% url 'company' vacancy.company.id %}"><img src="{{ vacancy.company.logo.url }}" width="130" height="80" alt=""></a>
+        <div class="d-flex align-items-baseline align-content-baseline">
+          <h1 class="h2 mt-4 font-weight-bold" >{{ vacancy.title }}</h1>
+          <p class="m-0 pl-3">{{ vacancy.salary_from }} – {{ vacancy.salary_to }} Р</p>
+        </div>
+        <p class="mt-2">{{ vacancy.specialty.name }} • {{ vacancy.skills }}</p>
+        <p class="text-muted mb-4">{{ vacancy.company.name }}, {{ vacancy.company.location }}</p>
+        <div style="line-height: 1.8;"> 
+          <p>{{ vacancy.description|safe }}</p>
+        </div>
+        <form method="post" action="" class="card mt-4 mb-3" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="card-body mx-3">
+            <p class="h5 mt-3 font-weight-normal">Отозваться на вакансию</p>
+            
+            <div class="form-group">
+              <label class="mb-1 mt-2" for="id_{{ form.written_username.name }}">Вас зовут</label>
+              <input class="form-control" type="text" name="{{ form.written_username.name }}" id="id_{{ form.written_username.name }}">
+            </div>
+
+            <div class="form-group">
+              <label class="mb-1" for="id_{{ form.written_phone.name }}">Ваш телефон</label>
+              <input class="form-control" type="tel" name="{{ form.written_phone.name }}" id="id_{{ form.written_phone.name }}">
+            </div>
+            
+            <div class="form-group">
+              <label class="mb-1" for="id_{{ form.written_cover_letter.name }}" >Сопроводительное письмо</label>
+              <textarea class="form-control" rows="8" name="{{ form.written_cover_letter.name }}" id="id_{{ form.written_cover_letter.name }}"></textarea>
+            </div>
+            {{ form.errors }}
+
+            <input type="submit" class="btn btn-primary mt-4 mb-2" value="Откликнуться">
+          
+          </div>
+        </form>
+      </section>
+    </div>
+  </div>
+</main>
+
+{% endblock %}
